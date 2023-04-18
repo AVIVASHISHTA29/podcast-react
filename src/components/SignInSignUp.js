@@ -1,7 +1,6 @@
 // components/SignInSignUp.js
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../slices/authSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { setUser, clearUser } from "../slices/userSlice";
 import { auth, db } from "../firebase";
 import {
@@ -11,6 +10,7 @@ import {
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function SignInSignUp() {
   const dispatch = useDispatch();
@@ -38,7 +38,6 @@ function SignInSignUp() {
       });
 
       // Update authentication state and user information in the store
-      dispatch(login());
       dispatch(setUser({ email: user.email, uid: user.uid, name: name }));
       navigate("/profile");
     } catch (error) {
@@ -60,8 +59,6 @@ function SignInSignUp() {
       const userDoc = await getDoc(doc(db, "users", user.uid));
       const userData = userDoc.data();
 
-      // Update authentication state and user information in the store
-      dispatch(login());
       dispatch(
         setUser({ name: userData.name, email: user.email, uid: user.uid })
       );
@@ -75,9 +72,6 @@ function SignInSignUp() {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-
-      // Update authentication state and clear user information in the store
-      dispatch(logout());
       dispatch(clearUser());
     } catch (error) {
       console.error("Error signing out:", error);

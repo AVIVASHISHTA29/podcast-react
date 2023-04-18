@@ -8,43 +8,9 @@ import { onAuthStateChanged } from "firebase/auth";
 
 function Profile() {
   const user = useSelector((state) => state.user.user);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const unsubscribeSnapshot = onSnapshot(
-          doc(db, "users", user.uid),
-          (userDoc) => {
-            if (userDoc.exists()) {
-              const userData = userDoc.data();
-              dispatch(
-                setUser({
-                  name: userData.name,
-                  email: userData.email,
-                  uid: user.uid,
-                })
-              );
-            }
-          },
-          (error) => {
-            console.error("Error fetching user data:", error);
-          }
-        );
-
-        return () => {
-          unsubscribeSnapshot();
-        };
-      }
-    });
-
-    return () => {
-      unsubscribeAuth();
-    };
-  }, [dispatch]);
 
   if (!user) {
-    return <div>Loading...</div>;
+    return <p>Loading...</p>;
   }
 
   return (
