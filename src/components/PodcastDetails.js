@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import { doc, getDoc, collection, query, onSnapshot } from "firebase/firestore";
+import AudioPlayer from "./AudioPlayer";
 
 function PodcastDetails() {
   const { podcastId } = useParams();
@@ -59,10 +60,7 @@ function PodcastDetails() {
           <li key={episode.id}>
             <h4>{episode.title}</h4>
             <p>{episode.description}</p>
-            <audio controls>
-              <source src={episode.audioFile} type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
+            <AudioPlayer audioSrc={episode.audioFile} />
           </li>
         ))}
       </ul>

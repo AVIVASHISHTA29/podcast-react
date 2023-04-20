@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.audio-player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  outline: none;
+  margin: 0 1rem;
+} */
+
+input[type="range"] {
+  width: 50%;
+}
+
+.duration-bar {
+  width: 100%;
+  margin: 1rem 0;
+}
