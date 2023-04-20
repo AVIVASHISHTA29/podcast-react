@@ -67,21 +67,33 @@ const AudioPlayer = ({ audioSrc }) => {
     audioRef.current.currentTime = newTime;
   };
 
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
   return (
     <div className="audio-player">
       <audio ref={audioRef} src={audioSrc} />
       <button onClick={togglePlay}>
         {isPlaying ? <FaPause /> : <FaPlay />}
       </button>
-      <input
-        type="range"
-        className="duration-bar"
-        min="0"
-        max={duration}
-        step="0.01"
-        value={currentTime}
-        onChange={handleDurationChange}
-      />
+      <div className="time-info">
+        <span className="current-time">{formatTime(currentTime)}</span>
+        <input
+          type="range"
+          className="duration-bar"
+          min="0"
+          max={duration}
+          step="1"
+          value={currentTime}
+          onChange={handleDurationChange}
+        />
+        <span className="remaining-time">
+          -{formatTime(duration - currentTime)}
+        </span>
+      </div>
       <button onClick={toggleMute}>
         {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
       </button>

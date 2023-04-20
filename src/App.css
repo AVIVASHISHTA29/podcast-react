@@ -27,3 +27,15 @@ input[type="range"] {
   width: 100%;
   margin: 1rem 0;
 }
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.current-time,
+.remaining-time {
+  font-size: 0.9rem;
+}
