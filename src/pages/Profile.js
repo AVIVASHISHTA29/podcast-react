@@ -5,6 +5,7 @@ import { setUser } from "../slices/userSlice";
 import { auth, db } from "../firebase";
 import { onSnapshot, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import Header from "../components/Header";
 
 function Profile() {
   const user = useSelector((state) => state.user.user);
@@ -15,6 +16,7 @@ function Profile() {
 
   return (
     <div>
+      <Header />
       <h2>Profile</h2>
       <p>Name: {user.name}</p>
       <p>Email: {user.email}</p>

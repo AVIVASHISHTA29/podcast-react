@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import { doc, getDoc, collection, query, onSnapshot } from "firebase/firestore";
-import AudioPlayer from "./AudioPlayer";
+import AudioPlayer from "../components/AudioPlayer";
+import Header from "../components/Header";
 
 function PodcastDetails() {
   const { podcastId } = useParams();
@@ -51,6 +52,7 @@ function PodcastDetails() {
 
   return (
     <div>
+      <Header />
       <h2>{podcast.title}</h2>
       <img src={podcast.bannerImage} alt={podcast.title} width="300" />
       <p>{podcast.description}</p>

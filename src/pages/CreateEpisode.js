@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { auth, db, storage } from "../firebase";
 import { doc, getDoc, addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import Header from "../components/Header";
 
 function CreateEpisode() {
   const { podcastId } = useParams();
@@ -78,6 +79,7 @@ function CreateEpisode() {
 
   return (
     <div>
+      <Header />
       <h2>Create Episode for {podcast.title}</h2>
       <form onSubmit={handleSubmit}>
         <input

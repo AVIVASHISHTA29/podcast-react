@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { setPodcasts } from "../slices/podcastSlice";
 import { db } from "../firebase";
 import { collection, query, onSnapshot } from "firebase/firestore";
+import Header from "../components/Header";
 
 function Podcasts() {
   const podcasts = useSelector((state) => state.podcast.podcasts);
@@ -32,6 +33,7 @@ function Podcasts() {
 
   return (
     <div>
+      <Header />
       <h2>All Podcasts</h2>
       <ul>
         {podcasts.map((podcast) => (

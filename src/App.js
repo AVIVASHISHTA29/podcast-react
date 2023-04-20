@@ -1,12 +1,12 @@
 // App.js
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SignInSignUp from "./components/SignInSignUp";
-import Profile from "./components/Profile";
-import Podcasts from "./components/Podcasts";
-import CreatePodcast from "./components/CreatePodcast";
-import CreateEpisode from "./components/CreateEpisode";
-import PodcastDetails from "./components/PodcastDetails";
+import SignInSignUp from "./pages/SignInSignUp";
+import Profile from "./pages/Profile";
+import Podcasts from "./pages/Podcasts";
+import CreatePodcast from "./pages/CreatePodcast";
+import CreateEpisode from "./pages/CreateEpisode";
+import PodcastDetails from "./pages/PodcastDetails";
 import PrivateRoutes from "./components/PrivateRoutes";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -14,6 +14,7 @@ import { auth, db } from "./firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slices/userSlice";
+import Header from "./components/Header";
 
 function App() {
   const dispatch = useDispatch();

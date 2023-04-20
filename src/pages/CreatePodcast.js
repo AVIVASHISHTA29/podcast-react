@@ -4,6 +4,7 @@ import { auth, db, storage } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 export default function CreatePodcast() {
   const [title, setTitle] = useState("");
@@ -50,6 +51,7 @@ export default function CreatePodcast() {
 
   return (
     <div>
+      <Header />
       <h2>Create Podcast</h2>
       <form onSubmit={handleSubmit}>
         <input

@@ -11,6 +11,7 @@ import {
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Header from "../components/Header";
 
 function SignInSignUp() {
   const dispatch = useDispatch();
@@ -80,6 +81,7 @@ function SignInSignUp() {
 
   return (
     <div>
+      <Header />
       <h2>Sign In / Sign Up</h2>
       <form>
         <input
