@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 
-const AudioPlayer = ({ audioSrc }) => {
+const AudioPlayer = ({ audioSrc, image }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(1);
@@ -76,6 +76,7 @@ const AudioPlayer = ({ audioSrc }) => {
   return (
     <div className="audio-player">
       <audio ref={audioRef} src={audioSrc} />
+      <img src={image} className="player-image" />
       <button onClick={togglePlay}>
         {isPlaying ? <FaPause /> : <FaPlay />}
       </button>
@@ -98,6 +99,7 @@ const AudioPlayer = ({ audioSrc }) => {
         {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
       </button>
       <input
+        className="sound-bar"
         type="range"
         min="0"
         max="1"

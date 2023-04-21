@@ -6,12 +6,14 @@ import { doc, getDoc, collection, query, onSnapshot } from "firebase/firestore";
 import AudioPlayer from "../components/AudioPlayer";
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
+import Button from "../components/Button";
 
 function PodcastDetails() {
   const { podcastId } = useParams();
   const [podcast, setPodcast] = useState(null);
   const [episodes, setEpisodes] = useState([]);
   const user = useSelector((state) => state.user.user);
+  const [playingAudio, setPlayingAudio] = useState("");
 
   useEffect(() => {
     const fetchPodcast = async () => {
@@ -64,12 +66,24 @@ function PodcastDetails() {
           <li key={episode.id}>
             <h4>{episode.title}</h4>
             <p>{episode.description}</p>
-            <AudioPlayer audioSrc={episode.audioFile} />
+            <p
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setPlayingAudio(episode.audioFile);
+              }}
+            >
+              Play
+            </p>
           </li>
         ))}
       </ul>
       {podcast.createdBy == user.uid && (
-        <Link to={`/podcast/${podcastId}/create-episode`}>Create Episode</Link>
+        <Link to={`/podcast/${podcastId}/create-episode`}>
+          <Button text="Create Episode" onClick={() => console.log("")} />
+        </Link>
+      )}
+      {playingAudio && (
+        <AudioPlayer audioSrc={playingAudio} image={podcast.bannerImage} />
       )}
     </div>
   );
