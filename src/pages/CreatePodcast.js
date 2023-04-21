@@ -5,6 +5,9 @@ import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import InputComponent from "../components/Input";
+import FileInput from "../components/Input/FileInput";
+import Button from "../components/Button";
 
 export default function CreatePodcast() {
   const [title, setTitle] = useState("");
@@ -12,9 +15,7 @@ export default function CreatePodcast() {
   const [bannerImage, setBannerImage] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     try {
       const imageRef = ref(
         storage,
@@ -43,37 +44,30 @@ export default function CreatePodcast() {
     }
   };
 
-  const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      setBannerImage(e.target.files[0]);
-    }
+  const handleImageChange = (file) => {
+    setBannerImage(file);
   };
 
   return (
     <div>
       <Header />
       <h2>Create Podcast</h2>
-      <form onSubmit={handleSubmit}>
-        <input
+      <form>
+        <InputComponent
           type="text"
           placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
+          state={title}
+          setState={setTitle}
         />
-        <textarea
+        <InputComponent
+          type="text"
           placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
+          state={description}
+          setState={setDescription}
         />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          required
-        />
-        <button type="submit">Create Podcast</button>
+
+        <FileInput onFileSelected={handleImageChange} />
+        <Button text="Create Podcast" onClick={handleSubmit} />
       </form>
     </div>
   );

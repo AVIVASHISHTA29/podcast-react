@@ -21,6 +21,7 @@ function Profile() {
       <p>Name: {user.name}</p>
       <p>Email: {user.email}</p>
       <p>UID: {user.uid}</p>
+      <img src={user.profilePic} width="300" />
     </div>
   );
 }

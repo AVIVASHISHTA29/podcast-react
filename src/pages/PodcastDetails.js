@@ -1,15 +1,17 @@
 // components/PodcastDetails.js
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { db } from "../firebase";
 import { doc, getDoc, collection, query, onSnapshot } from "firebase/firestore";
 import AudioPlayer from "../components/AudioPlayer";
 import Header from "../components/Header";
+import { useSelector } from "react-redux";
 
 function PodcastDetails() {
   const { podcastId } = useParams();
   const [podcast, setPodcast] = useState(null);
   const [episodes, setEpisodes] = useState([]);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     const fetchPodcast = async () => {
@@ -66,6 +68,9 @@ function PodcastDetails() {
           </li>
         ))}
       </ul>
+      {podcast.createdBy == user.uid && (
+        <Link to={`/podcast/${podcastId}/create-episode`}>Create Episode</Link>
+      )}
     </div>
   );
 }

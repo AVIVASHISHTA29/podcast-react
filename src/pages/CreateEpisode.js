@@ -5,6 +5,9 @@ import { auth, db, storage } from "../firebase";
 import { doc, getDoc, addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Header from "../components/Header";
+import InputComponent from "../components/Input";
+import FileInput from "../components/Input/FileInput";
+import Button from "../components/Button";
 
 function CreateEpisode() {
   const { podcastId } = useParams();
@@ -31,8 +34,6 @@ function CreateEpisode() {
   }, [podcastId]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
     try {
       const audioRef = ref(
         storage,
@@ -52,7 +53,7 @@ function CreateEpisode() {
         episodeData
       );
       alert("Episode created successfully!");
-
+      navigate(`/podcast/${podcastId}`);
       setTitle("");
       setDescription("");
       setAudioFile(null);
@@ -61,10 +62,8 @@ function CreateEpisode() {
     }
   };
 
-  const handleAudioChange = (e) => {
-    if (e.target.files[0]) {
-      setAudioFile(e.target.files[0]);
-    }
+  const handleAudioChange = (file) => {
+    setAudioFile(file);
   };
 
   if (!podcast) {
@@ -81,27 +80,21 @@ function CreateEpisode() {
     <div>
       <Header />
       <h2>Create Episode for {podcast.title}</h2>
-      <form onSubmit={handleSubmit}>
-        <input
+      <form>
+        <InputComponent
           type="text"
           placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
+          state={title}
+          setState={setTitle}
         />
-        <textarea
+        <InputComponent
+          type="text"
           placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
+          state={description}
+          setState={setDescription}
         />
-        <input
-          type="file"
-          accept="audio/*"
-          onChange={handleAudioChange}
-          required
-        />
-        <button type="submit">Create Episode</button>
+        <FileInput onFileSelected={handleAudioChange} />
+        <Button text={"Create Episode"} onClick={handleSubmit} />
       </form>
     </div>
   );
