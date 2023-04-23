@@ -104,10 +104,7 @@ function SignInSignUp() {
     setLoading(true);
     console.log("hi", file);
     try {
-      const imageRef = ref(
-        storage,
-        `podcasts/${auth.currentUser.uid}/${Date.now()}`
-      );
+      const imageRef = ref(storage, `profile/${Date.now()}`);
       await uploadBytes(imageRef, file);
 
       const imageURL = await getDownloadURL(imageRef);
