@@ -10,11 +10,7 @@ function PodcastCard({ displayImage, title, id }) {
         <img className="image" src={displayImage} />
         <div className="info">
           <p>{title}</p>
-          <FaPlay
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          />
+          <FaPlay />
         </div>
       </div>
     </Link>

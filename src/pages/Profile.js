@@ -56,19 +56,29 @@ function Profile() {
           <PodcastCard title={user.name} displayImage={user.profilePic} />
         </div>
         <h1 style={{ marginBottom: "2rem" }}>My Podcasts</h1>
-        {/* <p>Name: {user.name}</p> */}
-        {/* <p>Email: {user.email}</p>
-        <p>UID: {user.uid}</p>
-        <img src={user.profilePic} width="300" /> */}
         <div className="podcast-flex">
-          {podcasts.map((podcast) => (
-            <PodcastCard
-              key={podcast.id}
-              id={podcast.id}
-              title={podcast.title}
-              displayImage={podcast.displayImage}
-            />
-          ))}
+          {podcasts.length == 0 ? (
+            <p style={{ fontSize: "1.2rem" }}>You Have Zero Podcasts</p>
+          ) : (
+            <>
+              {podcasts.map((podcast) => (
+                <PodcastCard
+                  key={podcast.id}
+                  id={podcast.id}
+                  title={podcast.title}
+                  displayImage={podcast.displayImage}
+                />
+              ))}
+              {podcasts.map((podcast) => (
+                <PodcastCard
+                  key={podcast.id}
+                  id={podcast.id}
+                  title={podcast.title}
+                  displayImage={podcast.displayImage}
+                />
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>
