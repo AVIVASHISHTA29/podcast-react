@@ -6,6 +6,7 @@ import { setPodcasts } from "../slices/podcastSlice";
 import { db } from "../firebase";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import Header from "../components/Header";
+import PodcastCard from "../components/PodcastCard";
 
 function Podcasts() {
   const podcasts = useSelector((state) => state.podcast.podcasts);
@@ -34,18 +35,19 @@ function Podcasts() {
   return (
     <div>
       <Header />
-      <h2>All Podcasts</h2>
-      <ul>
-        {podcasts.map((podcast) => (
-          <li key={podcast.id}>
-            <Link to={`/podcast/${podcast.id}`}>
-              <h3>{podcast.title}</h3>
-            </Link>
-            <img src={podcast.bannerImage} width="500" />
-            <p>{podcast.description}</p>
-          </li>
-        ))}
-      </ul>
+      <div className="wrapper">
+        <h1>Discover Podcasts</h1>
+        <div className="podcast-flex">
+          {podcasts.map((podcast) => (
+            <PodcastCard
+              key={podcast.id}
+              id={podcast.id}
+              title={podcast.title}
+              displayImage={podcast.displayImage}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

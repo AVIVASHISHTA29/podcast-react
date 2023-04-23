@@ -21,9 +21,9 @@
   margin: 0 1rem;
 } */
 
-/* input[type="range"] {
-  width: 80%;
-} */
+input[type="range"] {
+  filter: hue-rotate(25deg);
+}
 
 .duration-bar {
   width: 90%;

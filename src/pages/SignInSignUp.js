@@ -125,8 +125,8 @@ function SignInSignUp() {
     <div>
       <Header />
       {!flag ? (
-        <div className="signup-form">
-          <h2>Sign Up</h2>
+        <div className="wrapper">
+          <h1>Sign Up</h1>
           <form>
             <InputComponent
               type="text"
@@ -147,7 +147,11 @@ function SignInSignUp() {
               setState={setPassword}
             />
 
-            <FileInput onFileSelected={uploadImage} accept={"image/*"} />
+            <FileInput
+              id="user-image"
+              onFileSelected={uploadImage}
+              accept={"image/*"}
+            />
 
             <Button
               onClick={handleSignUp}
@@ -159,8 +163,8 @@ function SignInSignUp() {
         </div>
       ) : (
         <div>
-          <div className="signup-form">
-            <h2>Sign In</h2>
+          <div className="wrapper">
+            <h1>Sign In</h1>
             <form>
               <InputComponent
                 type="email"

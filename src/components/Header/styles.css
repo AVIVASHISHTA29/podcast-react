@@ -11,7 +11,7 @@
   position: absolute;
   width: 50%;
   min-width: 400px;
-  height: 200px;
+  height: 180px;
   top: -150px;
   background: #18b2de;
   filter: blur(100px);
@@ -22,7 +22,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   width: fit-content;
 }
 

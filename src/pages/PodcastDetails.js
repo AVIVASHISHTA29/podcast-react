@@ -7,7 +7,7 @@ import AudioPlayer from "../components/AudioPlayer";
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
 import Button from "../components/Button";
-
+import { FaPlay } from "react-icons/fa";
 function PodcastDetails() {
   const { podcastId } = useParams();
   const [podcast, setPodcast] = useState(null);
@@ -57,34 +57,72 @@ function PodcastDetails() {
   return (
     <div>
       <Header />
-      <h2>{podcast.title}</h2>
-      <img src={podcast.bannerImage} alt={podcast.title} width="300" />
-      <p>{podcast.description}</p>
-      <h3>Episodes:</h3>
-      <ul>
-        {episodes.map((episode) => (
-          <li key={episode.id}>
-            <h4>{episode.title}</h4>
-            <p>{episode.description}</p>
-            <p
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                setPlayingAudio(episode.audioFile);
-              }}
-            >
-              Play
-            </p>
-          </li>
-        ))}
-      </ul>
-      {podcast.createdBy == user.uid && (
-        <Link to={`/podcast/${podcastId}/create-episode`}>
-          <Button text="Create Episode" onClick={() => console.log("")} />
-        </Link>
-      )}
-      {playingAudio && (
-        <AudioPlayer audioSrc={playingAudio} image={podcast.bannerImage} />
-      )}
+      <div className="wrapper" style={{ marginTop: "0rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <h1 style={{ textAlign: "left", marginBottom: "1rem" }}>
+            {podcast.title}
+          </h1>
+          {podcast.createdBy == user.uid && (
+            <Link to={`/podcast/${podcastId}/create-episode`}>
+              <h1
+                style={{
+                  marginBottom: "1rem",
+                  textAlign: "right",
+                  color: "var(--white)",
+                  border: "1px solid var(--white)",
+                  padding: "0.5rem 1rem",
+                  borderRadius: "0.5rem",
+                  fontSize: "1.2rem",
+                }}
+              >
+                Create Episode
+              </h1>
+            </Link>
+          )}
+        </div>
+        <div className="podcastBannerDiv">
+          <img src={podcast.bannerImage} alt={podcast.title} />
+        </div>
+
+        <p>{podcast.description}</p>
+        <h1 style={{ textAlign: "left", marginBottom: 0 }}>Episodes:</h1>
+        {episodes.length > 0 ? (
+          <ol style={{ marginTop: "1.5rem", paddingBottom: "4rem" }}>
+            {episodes.map((episode) => (
+              <li key={episode.id}>
+                <p style={{ color: "var(--white)", textAlign: "left" }}>
+                  {episode.title}
+                </p>
+                <p>{episode.description}</p>
+                <p
+                  onClick={() => {
+                    setPlayingAudio(episode.audioFile);
+                  }}
+                  style={{
+                    color: "var(--white)",
+                    border: "1px solid var(--white)",
+                    padding: "0.5rem 1rem",
+                    borderRadius: "0.5rem",
+                    width: "fit-content",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    cursor: "pointer",
+                  }}
+                >
+                  Play <FaPlay style={{ fontSize: "0.8rem" }} />
+                </p>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p>This podcast currently have 0 episodes</p>
+        )}
+
+        {playingAudio && (
+          <AudioPlayer audioSrc={playingAudio} image={podcast.displayImage} />
+        )}
+      </div>
     </div>
   );
 }

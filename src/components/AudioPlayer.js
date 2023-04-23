@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 
 const AudioPlayer = ({ audioSrc, image }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(1);
   const [currentTime, setCurrentTime] = useState(0);
@@ -87,7 +87,7 @@ const AudioPlayer = ({ audioSrc, image }) => {
           className="duration-bar"
           min="0"
           max={duration}
-          step="1"
+          step="0.001"
           value={currentTime}
           onChange={handleDurationChange}
         />

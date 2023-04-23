@@ -14,32 +14,43 @@ export default function CreatePodcast() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [bannerImage, setBannerImage] = useState(null);
+  const [displayImage, setDisplayImage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
-      const imageRef = ref(
+      const bannerImageRef = ref(
         storage,
         `podcasts/${auth.currentUser.uid}/${Date.now()}`
       );
-      await uploadBytes(imageRef, bannerImage);
+      await uploadBytes(bannerImageRef, bannerImage);
 
-      const imageURL = await getDownloadURL(imageRef);
+      const bannerImageUrl = await getDownloadURL(bannerImageRef);
+
+      const displayImageRef = ref(
+        storage,
+        `podcasts/${auth.currentUser.uid}/${Date.now()}`
+      );
+      await uploadBytes(displayImageRef, displayImage);
+
+      const displayImageURL = await getDownloadURL(displayImageRef);
+
       const podcastData = {
         title,
         description,
-        bannerImage: imageURL,
+        bannerImage: bannerImageUrl,
+        displayImage: displayImageURL,
         createdBy: auth.currentUser.uid,
       };
 
       const docRef = await addDoc(collection(db, "podcasts"), podcastData);
-      alert("Podcast created successfully!");
 
       // Redirect to the podcast details page
       navigate(`/podcast/${docRef.id}`);
       setTitle("");
       setDescription("");
       setBannerImage(null);
+      setDisplayImage(null);
       toast.success("Podcast Created Successful!");
     } catch (error) {
       console.error("Error creating podcast:", error);
@@ -48,30 +59,46 @@ export default function CreatePodcast() {
   };
 
   const handleImageChange = (file) => {
+    setDisplayImage(file);
+  };
+
+  const handleBannerImageChange = (file) => {
     setBannerImage(file);
   };
 
   return (
     <div>
       <Header />
-      <h2>Create Podcast</h2>
-      <form>
-        <InputComponent
-          type="text"
-          placeholder="Title"
-          state={title}
-          setState={setTitle}
-        />
-        <InputComponent
-          type="text"
-          placeholder="Description"
-          state={description}
-          setState={setDescription}
-        />
-
-        <FileInput onFileSelected={handleImageChange} accept={".mp3"} />
-        <Button text="Create Podcast" onClick={handleSubmit} />
-      </form>
+      <div className="wrapper">
+        <h1>Create Podcast</h1>
+        <form>
+          <InputComponent
+            type="text"
+            placeholder="Title"
+            state={title}
+            setState={setTitle}
+          />
+          <InputComponent
+            type="text"
+            placeholder="Description"
+            state={description}
+            setState={setDescription}
+          />
+          <FileInput
+            id="display-image"
+            onFileSelected={handleImageChange}
+            accept={"image/*"}
+            text={"Upload Display Image"}
+          />
+          <FileInput
+            id="banner-image"
+            onFileSelected={handleBannerImageChange}
+            accept={"image/*"}
+            text={"Upload Banner Image"}
+          />
+          <Button text="Create Podcast" onClick={handleSubmit} />
+        </form>
+      </div>
     </div>
   );
 }

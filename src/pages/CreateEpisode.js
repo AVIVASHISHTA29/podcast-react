@@ -53,7 +53,7 @@ function CreateEpisode() {
         collection(db, "podcasts", podcastId, "episodes"),
         episodeData
       );
-      alert("Episode created successfully!");
+
       navigate(`/podcast/${podcastId}`);
       setTitle("");
       setDescription("");
@@ -82,23 +82,30 @@ function CreateEpisode() {
   return (
     <div>
       <Header />
-      <h2>Create Episode for {podcast.title}</h2>
-      <form>
-        <InputComponent
-          type="text"
-          placeholder="Title"
-          state={title}
-          setState={setTitle}
-        />
-        <InputComponent
-          type="text"
-          placeholder="Description"
-          state={description}
-          setState={setDescription}
-        />
-        <FileInput onFileSelected={handleAudioChange} accept={"image/*"} />
-        <Button text={"Create Episode"} onClick={handleSubmit} />
-      </form>
+      <div className="wrapper">
+        <h1>Create Episode for {podcast.title}</h1>
+        <form>
+          <InputComponent
+            type="text"
+            placeholder="Title"
+            state={title}
+            setState={setTitle}
+          />
+          <InputComponent
+            type="text"
+            placeholder="Description"
+            state={description}
+            setState={setDescription}
+          />
+          <FileInput
+            id="audio-file"
+            onFileSelected={handleAudioChange}
+            accept={".mp3"}
+            text={"Add Audio File"}
+          />
+          <Button text={"Create Episode"} onClick={handleSubmit} />
+        </form>
+      </div>
     </div>
   );
 }
