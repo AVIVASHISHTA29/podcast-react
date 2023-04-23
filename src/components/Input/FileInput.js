@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 
-const FileInput = ({ onFileSelected }) => {
+const FileInput = ({ accept, onFileSelected }) => {
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       onFileSelected(e.target.files[0]);
@@ -12,6 +12,7 @@ const FileInput = ({ onFileSelected }) => {
     <>
       <input
         type="file"
+        accept={accept}
         id="hidden-input-file"
         onChange={handleFileChange}
         style={{ display: "none" }}

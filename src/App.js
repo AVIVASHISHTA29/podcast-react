@@ -15,7 +15,8 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slices/userSlice";
 import Header from "./components/Header";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const dispatch = useDispatch();
 
@@ -55,6 +56,7 @@ function App() {
 
   return (
     <div className="App">
+      <ToastContainer />
       <Router>
         <Routes>
           <Route path="/" element={<SignInSignUp />} />

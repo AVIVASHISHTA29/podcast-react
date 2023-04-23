@@ -16,6 +16,7 @@ import InputComponent from "../components/Input";
 import Button from "../components/Button";
 import FileInput from "../components/Input/FileInput";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { toast } from "react-toastify";
 
 function SignInSignUp() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ function SignInSignUp() {
   const [fileURL, setFileURL] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSignUp = async (e) => {
+  const handleSignUp = async () => {
     // e.preventDefault();
 
     try {
@@ -55,15 +56,14 @@ function SignInSignUp() {
           profilePic: fileURL,
         })
       );
+      toast.success("User Signup Successful!");
       navigate("/profile");
     } catch (error) {
       console.error("Error signing up:", error);
     }
   };
 
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-
+  const handleSignIn = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -83,6 +83,7 @@ function SignInSignUp() {
           profilePic: userData.profilePic,
         })
       );
+      toast.success("User Login Successful!");
       navigate("/profile");
       // Navigate to the profile page
     } catch (error) {
@@ -113,8 +114,10 @@ function SignInSignUp() {
       setFileURL(imageURL);
       setLoading(false);
       console.log("IMageURL", imageURL);
+      toast.success("Image Uploaded!");
     } catch (e) {
       console.log(e);
+      toast.error("Error Occurred!");
     }
   };
 
@@ -144,7 +147,7 @@ function SignInSignUp() {
               setState={setPassword}
             />
 
-            <FileInput onFileSelected={uploadImage} />
+            <FileInput onFileSelected={uploadImage} accept={"image/*"} />
 
             <Button
               onClick={handleSignUp}

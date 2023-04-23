@@ -1,11 +1,26 @@
 import React from "react";
 import "./styles.css";
 import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { signOut } from "firebase/auth";
+import { clearUser } from "../../slices/userSlice";
 
 function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
-  console.log("PATH", currentPath);
+  const [user, loading, error] = useAuthState(auth);
+  const dispatch = useDispatch();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      dispatch(clearUser());
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   return (
     <div className="header-wrapper">
@@ -37,6 +52,11 @@ function Header() {
         >
           Profile
         </Link>
+        {user && (
+          <Link to="#" onClick={handleSignOut}>
+            Logout
+          </Link>
+        )}
       </div>
     </div>
   );

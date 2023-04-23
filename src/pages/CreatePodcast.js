@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import InputComponent from "../components/Input";
 import FileInput from "../components/Input/FileInput";
 import Button from "../components/Button";
+import { toast } from "react-toastify";
 
 export default function CreatePodcast() {
   const [title, setTitle] = useState("");
@@ -39,8 +40,10 @@ export default function CreatePodcast() {
       setTitle("");
       setDescription("");
       setBannerImage(null);
+      toast.success("Podcast Created Successful!");
     } catch (error) {
       console.error("Error creating podcast:", error);
+      toast.error("Error creating podcast:", error);
     }
   };
 
@@ -66,7 +69,7 @@ export default function CreatePodcast() {
           setState={setDescription}
         />
 
-        <FileInput onFileSelected={handleImageChange} />
+        <FileInput onFileSelected={handleImageChange} accept={".mp3"} />
         <Button text="Create Podcast" onClick={handleSubmit} />
       </form>
     </div>
